@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"fmt"
@@ -13,19 +13,7 @@ func init() {
 	tpl = template.Must(template.ParseGlob("*.html"))
 }
 
-func main() {
-
-	http.HandleFunc("/", index)
-	http.HandleFunc("/status", status)
-	http.HandleFunc("/stop", stop)
-	http.HandleFunc("/start", start)
-	http.HandleFunc("/address", address)
-	http.HandleFunc("/reboot", reboot)
-	http.ListenAndServe(":8080", nil)
-
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request) {
 
 	err := tpl.ExecuteTemplate(w, "index.html", nil)
 	if err != nil {
@@ -34,7 +22,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func status(w http.ResponseWriter, r *http.Request) {
+func Status(w http.ResponseWriter, r *http.Request) {
 
 	statusOutput, err := exec.Command("systemctl", "status", "openvpn").Output()
 	if err != nil {
@@ -56,7 +44,7 @@ func status(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func stop(w http.ResponseWriter, r *http.Request) {
+func Stop(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "systemctl", "stop", "openvpn")
 
 	err := cmd.Run()
@@ -70,7 +58,7 @@ func stop(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func start(w http.ResponseWriter, r *http.Request) {
+func Start(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "systemctl", "start", "openvpn")
 
 	err := cmd.Run()
@@ -85,7 +73,7 @@ func start(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func address(w http.ResponseWriter, r *http.Request) {
+func Address(w http.ResponseWriter, r *http.Request) {
 	cmd, err := exec.Command("curl", "ipv4.icanhazip.com").Output()
 	if err != nil {
 		fmt.Println(err)
@@ -105,7 +93,7 @@ func address(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func reboot(w http.ResponseWriter, r *http.Request) {
+func Reboot(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "shutdown", "-r", "now")
 
 	err := cmd.Run()
