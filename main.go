@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/stop", stop)
 	http.HandleFunc("/start", start)
 	http.HandleFunc("/address", address)
+	http.HandleFunc("/reboot", reboot)
 	http.ListenAndServe(":8080", nil)
 
 }
@@ -104,6 +105,17 @@ func address(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func reboot(w http.ResponseWriter, r *http.Request) {
+	cmd := exec.Command("sudo", "shutdown", "-r", "now")
 
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 
+        errors := tpl.ExecuteTemplate(w, "reboot.html", nil)
+        if errors != nil {
+                fmt.Println(errors)
+        }
 
+}
