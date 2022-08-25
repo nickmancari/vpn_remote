@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"html/template"
-	"os/exec"
 
 	"github.com/nickmancari/vpn_remote/handlers"
 )
