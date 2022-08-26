@@ -21,6 +21,8 @@ func main() {
 	http.HandleFunc("/start", handlers.Start)
 	http.HandleFunc("/address", handlers.Address)
 	http.HandleFunc("/reboot", handlers.Reboot)
+	http.HandleFunc("/movie", handlers.Movies)
+	http.HandleFunc("/movemovies", handlers.MoveMovies)
 	http.ListenAndServe(":8080", nil)
 
 }
