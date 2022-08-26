@@ -107,3 +107,43 @@ func Reboot(w http.ResponseWriter, r *http.Request) {
         }
 
 }
+
+func Movies(w http.ResponseWriter, r *http.Request) {
+	cmd, err := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	files := string(cmd)
+
+	fmt.Println(files)
+
+	data := struct{
+		Movielist string
+	}{
+		Movielist: files,
+	}
+
+	errs := tpl.ExecuteTemplate(w, "movies.html", data)
+	if errs != nil {
+		fmt.Println(errs)
+	}
+
+
+
+}
+
+func MoveMovies(w http.ResponseWriter, r *http.Request) {
+	cmd := exec.Command("sudo", "mv", "/var/lib/transmission-daemon/downloads/*/*.{avi,mkv,mp4}", "/media/tux/MOTHERSHIP/Movies/")
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+        errors := tpl.ExecuteTemplate(w, "movemovies.html", nil)
+        if errors != nil {
+                fmt.Println(errors)
+        }
+
+}
