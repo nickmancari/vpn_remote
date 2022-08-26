@@ -116,8 +116,6 @@ func Movies(w http.ResponseWriter, r *http.Request) {
 
 	files := string(cmd)
 
-	fmt.Println(files)
-
 	data := struct{
 		Movielist string
 	}{
@@ -134,7 +132,9 @@ func Movies(w http.ResponseWriter, r *http.Request) {
 }
 
 func MoveMovies(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("sudo", "mv", "/var/lib/transmission-daemon/downloads/*/*.{avi,mkv,mp4}", "/media/tux/MOTHERSHIP/Movies/")
+
+	cmd := exec.Command("/usr/bin/bash", "./scripts/move_movie.sh")
+
 
 	err := cmd.Run()
 	if err != nil {
