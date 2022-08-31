@@ -147,3 +147,20 @@ func MoveMovies(w http.ResponseWriter, r *http.Request) {
         }
 
 }
+
+func Purge(w http.ResponseWriter, r *http.Request) {
+
+	cmd := exec.Command("sudo", "/usr/bin/bash", "./scripts/purge_files.sh")
+
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+        errors := tpl.ExecuteTemplate(w, "purge.html", nil)
+        if errors != nil {
+                fmt.Println(errors)
+        }
+
+}
