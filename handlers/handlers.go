@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"html/template"
 	"os/exec"
+	"strings"
 )
 
 var tpl *template.Template
@@ -145,6 +146,30 @@ func MoveMovies(w http.ResponseWriter, r *http.Request) {
         if errors != nil {
                 fmt.Println(errors)
         }
+
+}
+
+func ListedShows(w http.ResponseWriter, r *http.Request) {
+	cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	s := string(cmd)
+	files := strings.Split(s, "\n")
+
+	data := struct{
+		Showlist []string
+	}{
+		Showlist: files,
+	}
+
+	errs := tpl.ExecuteTemplate(w, "tvshows.html", data)
+	if errs != nil {
+		fmt.Println(errs)
+	}
+
+
 
 }
 
