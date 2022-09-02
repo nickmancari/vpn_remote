@@ -38,7 +38,7 @@ func Status(w http.ResponseWriter, r *http.Request) {
 	var statusString string
 	for range statusRange {
 		if strings.Contains(statusRange[i], "Active") {
-			statusString = fmt.Sprintf("Systemctl Status:: %s %s", statusRange[i], statusRange[i+1])
+			statusString = fmt.Sprintf(" %s %s", statusRange[i], statusRange[i+1])
 		}
 		i++
 	}
