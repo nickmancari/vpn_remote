@@ -27,10 +27,21 @@ func Status(w http.ResponseWriter, r *http.Request) {
 
 	statusOutput, err := exec.Command("systemctl", "status", "openvpn").Output()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Status Function Error: %s\n", err)
 	}
 
-	statusString := string(statusOutput)
+	s := string(statusOutput)
+
+	statusRange := strings.Split(s, " ")
+
+	i := 0
+	var statusString string
+	for range statusRange {
+		if strings.Contains(statusRange[i], "Active") {
+			statusString = fmt.Sprintf("Systemctl Status:: %s %s", statusRange[i], statusRange[i+1])
+		}
+		i++
+	}
 
 	vpnStatus := struct{
 		Stat	string

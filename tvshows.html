@@ -14,7 +14,7 @@ body {
 		<center>Shows In Database:</center>
 		<br><br>
 		{{range $value := .Showlist}}
-		<form action="/moveshow">
+		<form method="POST "action="/moveshow">
 			<input type="radio" id={{$value}} name={{$value}} value={{$value}}>
 			<label for={{$value}}>{{$value}}</label><br>
 		{{end}}
