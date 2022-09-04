@@ -22,7 +22,7 @@ func main() {
 	http.HandleFunc("/address", handlers.Address)
 	http.HandleFunc("/reboot", handlers.Reboot)
 	http.HandleFunc("/movie", handlers.Movies)
-	http.HandleFunc("/tv", handlers.ListedShows)
+	http.HandleFunc("/media", handlers.MediaController)
 	http.HandleFunc("/movemovies", handlers.MoveMovies)
 	http.HandleFunc("/purge", handlers.Purge)
 	http.ListenAndServe(":8080", nil)

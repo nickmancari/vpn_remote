@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style type="text/css">
+body {
+	padding: 25px;
+}
+		</style>
+	</head>
+
+	<a href="/" target="_parent"><button>Back</button></a>
+        <br>
+	<body>
+			<center>Currently in Downloads:</center>
+		<br>
+		<form method="POST "action="/moveshow">
+			<input type="radio" id="insert" name="current" value="insert">
+			<label for="insert">insert</label><br><br>
+
+			<center>Database Directory:</center>
+		<br><br>
+			<input type="radio" id="Movies" name="directory" value="Movies">
+			<label for="Movies">Movies</label><br>
+		{{range $value := .Showlist}}
+			<input type="radio" id={{$value}} name="directory" value={{$value}}>
+			<label for={{$value}}>{{$value}}</label><br>
+		{{end}}
+		<br><br>
+		</form>
+		<input type="submit" value="Submit">
+	</body>
+</html>

@@ -160,7 +160,7 @@ func MoveMovies(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func ListedShows(w http.ResponseWriter, r *http.Request) {
+func MediaController(w http.ResponseWriter, r *http.Request) {
 	cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
 	if err != nil {
 		fmt.Println(err)
@@ -175,7 +175,7 @@ func ListedShows(w http.ResponseWriter, r *http.Request) {
 		Showlist: files,
 	}
 
-	errs := tpl.ExecuteTemplate(w, "tvshows.html", data)
+	errs := tpl.ExecuteTemplate(w, "media.html", data)
 	if errs != nil {
 		fmt.Println(errs)
 	}
