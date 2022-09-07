@@ -23,6 +23,7 @@ func main() {
 	http.HandleFunc("/reboot", handlers.Reboot)
 	http.HandleFunc("/movie", handlers.Movies)
 	http.HandleFunc("/media", handlers.MediaController)
+	http.HandleFunc("/move", handlers.Move)
 	http.HandleFunc("/movemovies", handlers.MoveMovies)
 	http.HandleFunc("/purge", handlers.Purge)
 	http.ListenAndServe(":8080", nil)

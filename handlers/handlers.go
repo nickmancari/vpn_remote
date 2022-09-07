@@ -184,6 +184,47 @@ func MediaController(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Move(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	directory := r.FormValue("directory")
+	newFile := r.FormValue("current")
+
+	if directory == "Movies" {
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"media/tux/MOTHERSHIP/Movies/")
+		/*
+		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		s := string(cmd)
+		*/
+
+	} else {
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"/media/tux/MOTHERSHIP/TV/"+"'"+directory+"'"+"/")
+		/*
+		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		s := string(cmd)
+		*/
+
+	}
+
+	err := tpl.ExecuteTemplate(w, "move.html", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+}
+
 func Purge(w http.ResponseWriter, r *http.Request) {
 
 	cmd := exec.Command("sudo", "/usr/bin/bash", "./scripts/purge_files.sh")
