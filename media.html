@@ -13,9 +13,11 @@ body {
 	<body>
 			<center>Currently in Downloads:</center>
 		<br>
-		<form method="POST "action="/moveshow">
-			<input type="radio" id="insert" name="current" value="insert">
-			<label for="insert">insert</label><br><br>
+		<form method="POST" form action="/move">
+		{{range $value := .Downloadlist}}
+		<input type="radio" id={{$value}} name="current" value={{$value}}>
+		<label for={{$value}}>{{$value}}</label><br><br>
+		{{end}}
 
 			<center>Database Directory:</center>
 		<br><br>
@@ -26,7 +28,7 @@ body {
 			<label for={{$value}}>{{$value}}</label><br>
 		{{end}}
 		<br><br>
+		<input type="Submit" value="Submit">
 		</form>
-		<input type="submit" value="Submit">
 	</body>
 </html>

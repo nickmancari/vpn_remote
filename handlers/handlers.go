@@ -166,21 +166,73 @@ func MediaController(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
+	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	if err != nil {
+		fmt.Println(errs)
+	}
+
+	d := string(dwnld)
+	downloadFiles := strings.Split(d, "\n")
+
+
 	s := string(cmd)
 	files := strings.Split(s, "\n")
 
 	data := struct{
 		Showlist []string
+		Downloadlist []string
 	}{
 		Showlist: files,
+		Downloadlist: downloadFiles,
 	}
 
-	errs := tpl.ExecuteTemplate(w, "media.html", data)
+	errors := tpl.ExecuteTemplate(w, "media.html", data)
 	if errs != nil {
-		fmt.Println(errs)
+		fmt.Println(errors)
 	}
 
 
+
+}
+
+func Move(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	directory := r.FormValue("directory")
+	newFile := r.FormValue("current")
+
+	if directory == "Movies" {
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"media/tux/MOTHERSHIP/Movies/")
+		/*
+		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		s := string(cmd)
+		*/
+
+	} else {
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"/media/tux/MOTHERSHIP/TV/"+"'"+directory+"'"+"/")
+		/*
+		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		s := string(cmd)
+		*/
+
+	}
+
+	err := tpl.ExecuteTemplate(w, "move.html", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }
 
