@@ -206,7 +206,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 	newFile := r.FormValue("current")
 
 	if directory == "Movies" {
-		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"media/tux/MOTHERSHIP/Movies/")
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+"'"+newFile+"'"+"/*.mp4"+" "+"media/tux/MOTHERSHIP/Movies/")
 		/*
 		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
 		if err != nil {
@@ -217,7 +217,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 		*/
 
 	} else {
-		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+newFile+" "+"/media/tux/MOTHERSHIP/TV/"+"'"+directory+"'"+"/")
+		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+"'"+newFile+"'"+" "+"/media/tux/MOTHERSHIP/TV/"+"'"+directory+"'"+"/")
 		/*
 		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
 		if err != nil {
