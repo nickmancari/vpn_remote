@@ -166,18 +166,29 @@ func MediaController(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
+	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	if err != nil {
+		fmt.Println(errs)
+	}
+
+	d := string(dwnld)
+	downloadFiles := strings.Split(d, "\n")
+
+
 	s := string(cmd)
 	files := strings.Split(s, "\n")
 
 	data := struct{
 		Showlist []string
+		Downloadlist []string
 	}{
 		Showlist: files,
+		Downloadlist: downloadFiles,
 	}
 
-	errs := tpl.ExecuteTemplate(w, "media.html", data)
+	errors := tpl.ExecuteTemplate(w, "media.html", data)
 	if errs != nil {
-		fmt.Println(errs)
+		fmt.Println(errors)
 	}
 
 

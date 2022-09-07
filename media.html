@@ -14,8 +14,10 @@ body {
 			<center>Currently in Downloads:</center>
 		<br>
 		<form method="POST" form action="/move">
-			<input type="radio" id="insert" name="current" value="insert">
-			<label for="insert">insert</label><br><br>
+		{{range $value := .Downloadlist}}
+		<input type="radio" id={{$value}} name="current" value={{$value}}>
+		<label for={{$value}}>{{$value}}</label><br><br>
+		{{end}}
 
 			<center>Database Directory:</center>
 		<br><br>
