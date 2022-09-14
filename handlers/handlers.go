@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"os/exec"
 	"strings"
+	"os"
 )
 
 var tpl *template.Template
@@ -203,30 +204,26 @@ func Move(w http.ResponseWriter, r *http.Request) {
 	}
 
 	directory := r.FormValue("directory")
-	newFile := r.FormValue("current")
+	media := r.FormValue("current")
+
 
 	if directory == "Movies" {
-		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+"'"+newFile+"'"+"/*.mp4"+" "+"media/tux/MOTHERSHIP/Movies/")
-		/*
-		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
-		if err != nil {
-			fmt.Println(err)
+
+		files, errs := os.ReadDir("/var/lib/transmission-daemon/downloads/"+media)
+		if errs != nil {
+			fmt.Println(errs)
 		}
 
-		s := string(cmd)
-		*/
+		for _, file := range files {
 
+			if strings.Contains(file.Name(), ".mp4") {
+				fmt.Println("/var/lib/transmission-daemon/downloads/"+media+"/"+file.Name())
+			}
+
+		}
 	} else {
-		fmt.Println("mv"+" "+"/var/lib/transmission-daemon/downloads/"+"'"+newFile+"'"+" "+"/media/tux/MOTHERSHIP/TV/"+"'"+directory+"'"+"/")
-		/*
-		cmd, err := exec.Command("sudo", "ls", "/media/tux/MOTHERSHIP/TV/").Output()
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		s := string(cmd)
-		*/
-
+		//new folder going to TV folder here, could be where directory option == New Folder
+		fmt.Println("Stub")
 	}
 
 	err := tpl.ExecuteTemplate(w, "move.html", nil)
