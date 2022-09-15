@@ -217,7 +217,6 @@ func Move(w http.ResponseWriter, r *http.Request) {
 		for _, file := range files {
 
 			if strings.Contains(file.Name(), ".mp4") {
-				fmt.Println("/var/lib/transmission-daemon/downloads/"+media+"/"+file.Name())
 				cmd := exec.Command("mv", "/var/lib/transmission-daemon/downloads/"+media+"/"+file.Name(), "/media/tux/MOTHERSHIP/Movies/")
 				err := cmd.Run()
 				if err != nil {
@@ -228,7 +227,12 @@ func Move(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		//new folder going to TV folder here, could be where directory option == New Folder
-		fmt.Println("Stub")
+		cmd := exec.Command("mv", "/var/lib/transmission-daemon/downloads/"+media, "/media/tux/MOTHERSHIP/TV/"+directory)
+
+		err := cmd.Run()
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	err := tpl.ExecuteTemplate(w, "move.html", nil)
