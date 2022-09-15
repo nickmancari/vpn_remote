@@ -226,7 +226,6 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 		}
 	} else {
-		//new folder going to TV folder here, could be where directory option == New Folder
 		cmd := exec.Command("mv", "/var/lib/transmission-daemon/downloads/"+media, "/media/tux/MOTHERSHIP/TV/"+directory)
 
 		err := cmd.Run()
