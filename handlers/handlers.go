@@ -202,6 +202,53 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func Delete(w http.ResponseWriter, r *http.Request) {
+
+	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	if errs != nil {
+		fmt.Println(errs)
+	}
+
+	d := string(dwnld)
+	downloadFiles := strings.Split(d, "\n")
+
+
+	data := struct{
+		Downloadlist []string
+	}{
+		Downloadlist: downloadFiles,
+	}
+
+	errors := tpl.ExecuteTemplate(w, "delete.html", data)
+	if errs != nil {
+		fmt.Println(errors)
+	}
+
+}
+
+func Remove(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	media := r.FormValue("current")
+
+	cmd := exec.Command("sudo", "rm", "-rf",  "/var/lib/transmission-daemon/downloads/"+media)
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	errors := tpl.ExecuteTemplate(w, "removed.html", nil)
+	if err != nil {
+		fmt.Println(errors)
+	}
+
+}
+
 func Purge(w http.ResponseWriter, r *http.Request) {
 
 	cmd := exec.Command("sudo", "/usr/bin/bash", "./scripts/purge_files.sh")
