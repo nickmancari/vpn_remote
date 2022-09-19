@@ -17,20 +17,12 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	err := tpl.ExecuteTemplate(w, "index.html", nil)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-}
-
-func Status(w http.ResponseWriter, r *http.Request) {
-
-	statusOutput, err := exec.Command("systemctl", "status", "openvpn").Output()
+	statusOutput, _ := exec.Command("systemctl", "status", "openvpn").Output()
+/*	Not handle error here for now
 	if err != nil {
 		fmt.Printf("Status Function Error: %s\n", err)
 	}
-
+*/
 	s := string(statusOutput)
 
 	statusRange := strings.Split(s, " ")
@@ -50,9 +42,9 @@ func Status(w http.ResponseWriter, r *http.Request) {
 		Stat:	statusString,
 	}
 
-	errs := tpl.ExecuteTemplate(w, "status.html", vpnStatus)
+	errs := tpl.ExecuteTemplate(w, "index.html", vpnStatus)
 	if errs != nil {
-		fmt.Println(err)
+		fmt.Println(errs)
 	}
 
 }
@@ -198,6 +190,53 @@ func Move(w http.ResponseWriter, r *http.Request) {
 	err := tpl.ExecuteTemplate(w, "move.html", nil)
 	if err != nil {
 		fmt.Println(err)
+	}
+
+}
+
+func Delete(w http.ResponseWriter, r *http.Request) {
+
+	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	if errs != nil {
+		fmt.Println(errs)
+	}
+
+	d := string(dwnld)
+	downloadFiles := strings.Split(d, "\n")
+
+
+	data := struct{
+		Downloadlist []string
+	}{
+		Downloadlist: downloadFiles,
+	}
+
+	errors := tpl.ExecuteTemplate(w, "delete.html", data)
+	if errs != nil {
+		fmt.Println(errors)
+	}
+
+}
+
+func Remove(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	media := r.FormValue("current")
+
+	cmd := exec.Command("sudo", "rm", "-rf",  "/var/lib/transmission-daemon/downloads/"+media)
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	errors := tpl.ExecuteTemplate(w, "removed.html", nil)
+	if err != nil {
+		fmt.Println(errors)
 	}
 
 }

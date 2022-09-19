@@ -16,13 +16,14 @@ func init() {
 func main() {
 
 	http.HandleFunc("/", handlers.Index)
-	http.HandleFunc("/status", handlers.Status)
 	http.HandleFunc("/stop", handlers.Stop)
 	http.HandleFunc("/start", handlers.Start)
 	http.HandleFunc("/address", handlers.Address)
 	http.HandleFunc("/reboot", handlers.Reboot)
 	http.HandleFunc("/media", handlers.MediaController)
 	http.HandleFunc("/move", handlers.Move)
+	http.HandleFunc("/delete", handlers.Delete)
+	http.HandleFunc("/remove", handlers.Remove)
 	http.HandleFunc("/purge", handlers.Purge)
 	http.ListenAndServe(":8080", nil)
 

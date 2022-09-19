@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style type="text/css">
+body {
+	padding: 25px;
+}
+		</style>
+	</head>
+
+	<a href="/" target="_parent"><button>Back</button></a>
+        <br>
+	<body>
+			<center>Currently in Downloads:</center>
+		<br>
+		<form method="POST" form action="/remove">
+		{{range $value := .Downloadlist}}
+		<input type="radio" id={{$value}} name="current" value={{$value}}>
+		<label for={{$value}}>{{$value}}</label><br><br>
+		{{end}}
+		<br>
+		<input type="Submit" value="Submit">
+		</form>
+	</body>
+</html>
