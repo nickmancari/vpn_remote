@@ -24,7 +24,6 @@ func main() {
 	http.HandleFunc("/move", handlers.Move)
 	http.HandleFunc("/delete", handlers.Delete)
 	http.HandleFunc("/remove", handlers.Remove)
-	http.HandleFunc("/purge", handlers.Purge)
 	http.ListenAndServe(":8080", nil)
 
 }
