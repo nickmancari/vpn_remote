@@ -17,9 +17,34 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	err := tpl.ExecuteTemplate(w, "index.html", nil)
+	statusOutput, _ := exec.Command("systemctl", "status", "openvpn").Output()
+/*	Not handle error here for now
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Status Function Error: %s\n", err)
+	}
+*/
+	s := string(statusOutput)
+
+	statusRange := strings.Split(s, " ")
+
+	i := 0
+	var statusString string
+	for range statusRange {
+		if strings.Contains(statusRange[i], "Active") {
+			statusString = fmt.Sprintf(" %s %s", statusRange[i], statusRange[i+1])
+		}
+		i++
+	}
+
+	vpnStatus := struct{
+		Stat	string
+	}{
+		Stat:	statusString,
+	}
+
+	errs := tpl.ExecuteTemplate(w, "index.html", vpnStatus)
+	if errs != nil {
+		fmt.Println(errs)
 	}
 
 }
