@@ -16,7 +16,6 @@ func init() {
 func main() {
 
 	http.HandleFunc("/", handlers.Index)
-	http.HandleFunc("/status", handlers.Status)
 	http.HandleFunc("/stop", handlers.Stop)
 	http.HandleFunc("/start", handlers.Start)
 	http.HandleFunc("/address", handlers.Address)

@@ -49,39 +49,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func Status(w http.ResponseWriter, r *http.Request) {
-
-	statusOutput, err := exec.Command("systemctl", "status", "openvpn").Output()
-	if err != nil {
-		fmt.Printf("Status Function Error: %s\n", err)
-	}
-
-	s := string(statusOutput)
-
-	statusRange := strings.Split(s, " ")
-
-	i := 0
-	var statusString string
-	for range statusRange {
-		if strings.Contains(statusRange[i], "Active") {
-			statusString = fmt.Sprintf(" %s %s", statusRange[i], statusRange[i+1])
-		}
-		i++
-	}
-
-	vpnStatus := struct{
-		Stat	string
-	}{
-		Stat:	statusString,
-	}
-
-	errs := tpl.ExecuteTemplate(w, "status.html", vpnStatus)
-	if errs != nil {
-		fmt.Println(err)
-	}
-
-}
-
 func Stop(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "systemctl", "stop", "openvpn")
 
