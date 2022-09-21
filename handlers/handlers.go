@@ -126,7 +126,8 @@ func MediaController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	d := string(dwnld)
-	downloadFiles := strings.Split(d, "\n")
+	v := strings.Trim(d, "\n")
+	downloadFiles := strings.Split(v, "\n")
 
 
 	s := string(cmd)
@@ -202,7 +203,8 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	d := string(dwnld)
-	downloadFiles := strings.Split(d, "\n")
+	s := strings.Trim(d, "\n")
+	downloadFiles := strings.Split(s, "\n")
 
 
 	data := struct{

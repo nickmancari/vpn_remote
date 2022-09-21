@@ -15,8 +15,12 @@ body {
 		<br>
 		<form method="POST" form action="/remove">
 		{{range $value := .Downloadlist}}
+		{{if $value}}
 		<input type="radio" id={{$value}} name="current" value={{$value}}>
 		<label for={{$value}}>{{$value}}</label><br><br>
+		{{else}}
+		<p><center>Nothing Here</center></p>
+		{{end}}
 		{{end}}
 		<br>
 		<input type="Submit" value="Submit">
