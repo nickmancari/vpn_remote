@@ -1,5 +1,5 @@
 <h1 align='center'>
-	Simple UI to control a VPN on a local server.
+	Simple UI to control a local NAS
 </h1>
 
 ![](https://img.shields.io/badge/OS-Linux-informational?style=flat&logo=Linux&logoColor=white&color=2bbc8a)
@@ -7,6 +7,7 @@
 
 ## Gist:
 <br>
-This little tool helps me control a VPN on a local headless server without having to SSH into it every time. I can check the status, restart the service, and see the IP address to confirm that the VPN is running.
+
+Early POC
 
 No big deal.
