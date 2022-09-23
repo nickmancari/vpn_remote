@@ -9,10 +9,11 @@ import (
 	"os"
 )
 
+
 var tpl *template.Template
 
 func init() {
-	tpl = template.Must(template.ParseGlob("*.html"))
+	tpl = template.Must(template.ParseGlob("static/*.html"))
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
