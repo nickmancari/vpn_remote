@@ -19,11 +19,7 @@ func init() {
 func Index(w http.ResponseWriter, r *http.Request) {
 
 	statusOutput, _ := exec.Command("systemctl", "status", "openvpn").Output()
-/*	Not handle error here for now
-	if err != nil {
-		fmt.Printf("Status Function Error: %s\n", err)
-	}
-*/
+
 	s := string(statusOutput)
 
 	statusRange := strings.Split(s, " ")

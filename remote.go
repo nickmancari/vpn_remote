@@ -6,19 +6,8 @@ import (
 	"github.com/nickmancari/vpn_remote/handlers"
 )
 
-/*
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseGlob("*.html"))
-}
-*/
 func main() {
 
-	/*
-	static := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", static))
-*/
 	http.HandleFunc("/", handlers.Index)
 	http.HandleFunc("/stop", handlers.Stop)
 	http.HandleFunc("/start", handlers.Start)
