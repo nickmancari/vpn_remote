@@ -33,10 +33,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		i++
 	}
 
+	cmd, err := exec.Command("curl", "ipv4.icanhazip.com").Output()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	location := string(cmd)
+
+
 	vpnStatus := struct{
 		Stat	string
+		IP	string
 	}{
 		Stat:	statusString,
+		IP:	location,
 	}
 
 	errs := tpl.ExecuteTemplate(w, "index.html", vpnStatus)
@@ -74,26 +84,6 @@ func Start(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
-func Address(w http.ResponseWriter, r *http.Request) {
-	cmd, err := exec.Command("curl", "ipv4.icanhazip.com").Output()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	location := string(cmd)
-
-	data := struct{
-		Address string
-	}{
-		Address: location,
-	}
-
-	errs := tpl.ExecuteTemplate(w, "address.html", data)
-	if errs != nil {
-		fmt.Println(errs)
-	}
-}
 
 func Reboot(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "shutdown", "-r", "now")
