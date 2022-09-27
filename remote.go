@@ -11,7 +11,6 @@ func main() {
 	http.HandleFunc("/", handlers.Index)
 	http.HandleFunc("/stop", handlers.Stop)
 	http.HandleFunc("/start", handlers.Start)
-	http.HandleFunc("/address", handlers.Address)
 	http.HandleFunc("/reboot", handlers.Reboot)
 	http.HandleFunc("/media", handlers.MediaController)
 	http.HandleFunc("/move", handlers.Move)
