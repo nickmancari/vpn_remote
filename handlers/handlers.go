@@ -7,8 +7,12 @@ import (
 	"os/exec"
 	"strings"
 	"os"
+
+	"github.com/nickmancari/vpn_remote/pkg/config"
 )
 
+
+var downloads = config.Read().DownloadSetting()
 
 var tpl *template.Template
 
@@ -107,7 +111,7 @@ func MediaController(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	dwnld, errs := exec.Command("sudo", "ls", downloads).Output()
 	if err != nil {
 		fmt.Println(errs)
 	}
@@ -150,7 +154,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 	if directory == "Movies" {
 
-		files, errs := os.ReadDir("/var/lib/transmission-daemon/downloads/"+media)
+		files, errs := os.ReadDir(downloads+media)
 		if errs != nil {
 			fmt.Println(errs)
 		}
@@ -158,7 +162,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 		for _, file := range files {
 
 			if strings.Contains(file.Name(), ".mp4") {
-				cmd := exec.Command("mv", "/var/lib/transmission-daemon/downloads/"+media+"/"+file.Name(), "/media/tux/MOTHERSHIP/Movies/")
+				cmd := exec.Command("mv", downloads+media+"/"+file.Name(), "/media/tux/MOTHERSHIP/Movies/")
 				err := cmd.Run()
 				if err != nil {
 					fmt.Println(err)
@@ -167,7 +171,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 		}
 	} else {
-		cmd := exec.Command("mv", "/var/lib/transmission-daemon/downloads/"+media, "/media/tux/MOTHERSHIP/TV/"+directory)
+		cmd := exec.Command("mv", downloads+media, "/media/tux/MOTHERSHIP/TV/"+directory)
 
 		err := cmd.Run()
 		if err != nil {
@@ -184,7 +188,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 
-	dwnld, errs := exec.Command("sudo", "ls", "/var/lib/transmission-daemon/downloads/").Output()
+	dwnld, errs := exec.Command("sudo", "ls", downloads).Output()
 	if errs != nil {
 		fmt.Println(errs)
 	}
@@ -216,7 +220,7 @@ func Remove(w http.ResponseWriter, r *http.Request) {
 
 	media := r.FormValue("current")
 
-	cmd := exec.Command("sudo", "rm", "-rf",  "/var/lib/transmission-daemon/downloads/"+media)
+	cmd := exec.Command("sudo", "rm", "-rf",  downloads+media)
 
 	err := cmd.Run()
 	if err != nil {
