@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/nickmancari/vpn_remote/pkg/config"
+	"github.com/nickmancari/vpn_remote/internal/sys"
 )
 
 

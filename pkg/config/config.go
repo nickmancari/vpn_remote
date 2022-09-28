@@ -36,7 +36,7 @@ func (s Setting) MediaSettings() string {
 
 }
 */
-func (s Setting) VpnSettings() bool {
+func (s Setting) VpnSetting() bool {
 
 	return s.Vpn
 
