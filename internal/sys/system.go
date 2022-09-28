@@ -38,3 +38,10 @@ func InternetProtocolAddress() string {
 	}
 
 }
+
+/*
+
+func VpnDaemonStatus() string {
+
+}
+*/
