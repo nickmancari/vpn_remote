@@ -23,24 +23,9 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	statusOutput, _ := exec.Command("systemctl", "status", "openvpn").Output()
-
-	s := string(statusOutput)
-
-	statusRange := strings.Split(s, " ")
-
-	i := 0
-	var statusString string
-	for range statusRange {
-		if strings.Contains(statusRange[i], "Active") {
-			statusString = fmt.Sprintf(" %s %s", statusRange[i], statusRange[i+1])
-		}
-		i++
-	}
-
+	statusString := sys.VpnDaemonStatus()
 
 	location := sys.InternetProtocolAddress()
-
 
 	vpnStatus := struct{
 		Stat	string

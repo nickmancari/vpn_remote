@@ -3,6 +3,7 @@ package sys
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 
 	"github.com/nickmancari/vpn_remote/pkg/config"
 
@@ -39,9 +40,32 @@ func InternetProtocolAddress() string {
 
 }
 
-/*
+
 
 func VpnDaemonStatus() string {
 
+	status := VpnSettingStatus()
+	var statusString string
+
+	if status == true {
+		systemctl, _ := exec.Command("systemctl", "status", "openvpn").Output()
+
+		s := string(systemctl)
+
+		statusRange := strings.Split(s, " ")
+
+		i := 0
+		for range statusRange {
+			if strings.Contains(statusRange[i], "Active") {
+				statusString = fmt.Sprintf(" %s ", strings.ToUpper(statusRange[i+1]))
+				return statusString
+			}
+			i++
+		}
+	} else {
+		return fmt.Sprint("VPN Status Unknown")
+	}
+
+	return ""
 }
-*/
+
