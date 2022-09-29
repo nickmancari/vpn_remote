@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/nickmancari/vpn_remote/pkg/config"
+	"github.com/nickmancari/vpn_remote/internal/sys"
 )
 
 
@@ -22,28 +23,9 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	statusOutput, _ := exec.Command("systemctl", "status", "openvpn").Output()
+	statusString := sys.VpnDaemonStatus()
 
-	s := string(statusOutput)
-
-	statusRange := strings.Split(s, " ")
-
-	i := 0
-	var statusString string
-	for range statusRange {
-		if strings.Contains(statusRange[i], "Active") {
-			statusString = fmt.Sprintf(" %s %s", statusRange[i], statusRange[i+1])
-		}
-		i++
-	}
-
-	cmd, err := exec.Command("curl", "ipv4.icanhazip.com").Output()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	location := string(cmd)
-
+	location := sys.InternetProtocolAddress()
 
 	vpnStatus := struct{
 		Stat	string
