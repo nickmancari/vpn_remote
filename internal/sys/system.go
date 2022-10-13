@@ -22,8 +22,6 @@ func VpnSettingStatus() bool {
 }
 
 func InternetProtocolAddress() string {
-	//run system cmd to get external ip
-	//return ip as string
 
 	status := VpnSettingStatus()
 
