@@ -36,6 +36,8 @@ func (s Setting) MediaSettings() string {
 
 }
 */
+
+// Get status on VPN configuration. Returns boolean of feature on or off.
 func (s Setting) VpnSetting() bool {
 
 	return s.Vpn
