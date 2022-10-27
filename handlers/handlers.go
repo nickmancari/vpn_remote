@@ -23,6 +23,15 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
+	errs := tpl.ExecuteTemplate(w, "index.html", nil)
+	if errs != nil {
+		fmt.Println(errs)
+	}
+
+}
+
+func VpnStatus(w http.ResponseWriter, r *http.Request) {
+
 	statusString := sys.VpnDaemonStatus()
 
 	location := sys.InternetProtocolAddress()
@@ -35,12 +44,13 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		IP:	location,
 	}
 
-	errs := tpl.ExecuteTemplate(w, "index.html", vpnStatus)
+	errs := tpl.ExecuteTemplate(w, "vpn_info.html", vpnStatus)
 	if errs != nil {
 		fmt.Println(errs)
 	}
 
 }
+
 
 func Stop(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("sudo", "systemctl", "stop", "openvpn")
