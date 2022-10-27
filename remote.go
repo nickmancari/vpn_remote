@@ -16,6 +16,7 @@ func main() {
 	http.HandleFunc("/move", handlers.Move)
 	http.HandleFunc("/delete", handlers.Delete)
 	http.HandleFunc("/remove", handlers.Remove)
+	http.HandleFunc("/vpn_info", handlers.VpnStatus)
 	http.ListenAndServe(":8080", nil)
 
 }
