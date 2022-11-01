@@ -60,7 +60,7 @@ func Stop(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	errors := tpl.ExecuteTemplate(w, "stop.html", nil)
+	errors := tpl.ExecuteTemplate(w, "index.html", nil)
 	if errors != nil {
 		fmt.Println(errors)
 	}
@@ -74,7 +74,7 @@ func Start(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	errors := tpl.ExecuteTemplate(w, "start.html", nil)
+	errors := tpl.ExecuteTemplate(w, "index.html", nil)
 	if errors != nil {
 		fmt.Println(errors)
 	}
