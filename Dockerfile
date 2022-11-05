@@ -1,6 +1,6 @@
 FROM golang:latest
 
-WORKDIR /Users/nick/remote
+WORKDIR /var/tmp/
 
 COPY go.* ./
 
