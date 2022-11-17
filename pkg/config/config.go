@@ -49,7 +49,7 @@ func Read() *Setting {
 
 	jsonFile, err := ioutil.ReadFile(config_file)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err, "No configuration file at "+config_file)
 	}
 
 	var setting Setting
