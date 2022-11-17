@@ -47,12 +47,13 @@ func (s Setting) VpnSetting() bool {
 // Read the config file from JSON format to use with the getters
 func Read() *Setting {
 
+	var setting Setting
+
 	jsonFile, err := ioutil.ReadFile(config_file)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err, "No configuration file at "+config_file)
+		return &setting
 	}
-
-	var setting Setting
 
 	err = json.Unmarshal(jsonFile, &setting)
 	if err != nil {
