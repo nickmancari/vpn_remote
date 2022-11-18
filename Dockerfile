@@ -1,4 +1,7 @@
+FROM ubuntu:lastest
 FROM golang:latest
+
+RUN apt-get -y update && apt-get -y install openvpn sudo
 
 WORKDIR /var/tmp/
 
