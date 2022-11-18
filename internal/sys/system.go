@@ -33,7 +33,7 @@ func InternetProtocolAddress() string {
 
 		return string(cmd)
 	} else {
-		return fmt.Sprint("IP Address Unaviable")
+		return fmt.Sprint("IP Address Unavailable")
 	}
 
 }
