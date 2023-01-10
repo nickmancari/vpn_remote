@@ -153,7 +153,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 
 		for _, file := range files {
 
-			if strings.Contains(file.Name(), ".mp4") {
+			if strings.Contains(file.Name(), ".mp4") || strings.Contains(file.Name(), ".avi") || strings.Contains(file.Name(), ".mkv") {
 				cmd := exec.Command("mv", downloads+media+"/"+file.Name(), "/media/tux/MOTHERSHIP/Movies/")
 				err := cmd.Run()
 				if err != nil {
